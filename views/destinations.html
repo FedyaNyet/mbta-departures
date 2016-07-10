@@ -1,0 +1,103 @@
+<html>
+	<head>
+	    <meta charset="UTF-8">
+		<title>MBTA Destinations</title>
+
+	    <!-- CSS -->
+	    <link rel="stylesheet" href="https://bootswatch.com/spacelab/bootstrap.min.css">
+	    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+	    <style>
+	        body { padding-top:50px; }
+	    </style>
+	</head>
+	<body>
+		{% if error %}
+			<div>Unable to Access remote feed</div>
+		{% elif schedules %}
+			<div class="container" ng-app="sortApp" ng-controller="mainController">
+
+			  	<form>
+					<div class="form-group">
+						<div class="input-group">
+							<div class="input-group-addon"><i class="fa fa-search"></i></div>
+							<input type="text" class="form-control" placeholder="Filter..." ng-model="filter">
+						</div>      
+					</div>
+				</form>
+
+				<table class="table table-bordered table-striped">
+					<thead>
+						<tr>
+
+							<td><a href="#" ng-click="setSort('Origin')">
+								Origin
+								<span ng-show="downBy('Origin')" class="fa fa-caret-down"></span>
+								<span ng-show="upBy('Origin')" class="fa fa-caret-up"></span>
+							</a></td>
+							<td><a href="#" ng-click="setSort('Destination')">
+								Destination
+								<span ng-show="downBy('Destination')" class="fa fa-caret-down"></span>
+								<span ng-show="upBy('Destination')" class="fa fa-caret-up"></span>
+							</a></td>
+							<td><a href="#" ng-click="setSort('Trip')">
+								Trip
+								<span ng-show="downBy('Trip')" class="fa fa-caret-down"></span>
+								<span ng-show="upBy('Trip')" class="fa fa-caret-up"></span>
+							</a></td>
+							<td><a href="#" ng-click="setSort('ScheduledTime')">
+								ScheduledTime
+								<span ng-show="downBy('ScheduledTime')" class="fa fa-caret-down"></span>
+								<span ng-show="upBy('ScheduledTime')" class="fa fa-caret-up"></span>
+							</a></td>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="sch in schedules | filter:filter | orderBy:sortBy:sortReverse">
+							<td>[[ sch.Origin ]]</td>
+							<td>[[ sch.Destination ]]</td>
+							<td>[[ sch.Trip ]]</td>
+							<td>[[ sch.ScheduledTime * 1000 | amCalendar ]]</td>
+						</tr>
+					</tbody>
+
+				</table>
+			  
+			</div>
+		{% endif %}
+		<script src="script/angular/angular.js"></script>
+		<script src="script/moment/moment.js"></script>
+		<script src="script/angular-moment/angular-moment.js"></script>
+		<script>
+			var schedules = {{schedules|raw|json_encode}};
+
+			angular.module('sortApp', ['angularMoment'])
+				.config(function($interpolateProvider){
+				    $interpolateProvider.startSymbol('[[').endSymbol(']]');
+				})
+				.controller('mainController', function($scope) {
+
+					$scope.sortBy = "Origin";
+					$scope.sortReverse = false;
+					$scope.filter = "";
+				  
+					// create the list of sushi rolls 
+					$scope.schedules = {{schedules|raw|json_encode}};
+
+					$scope.setSort = function(col){
+						$scope.sortBy = col;
+						if($scope.sortBy == col)
+							$scope.sortReverse = !$scope.sortReverse;
+					};
+
+					$scope.downBy = function(col){
+						return $scope.sortBy == col && $scope.sortReverse;
+					};
+					$scope.upBy = function(col){
+						return $scope.sortBy == col && !$scope.sortReverse;
+					};
+
+				  
+				});
+		</script>
+	</body>
+</html>
