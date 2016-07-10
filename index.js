@@ -4,7 +4,7 @@ var express = require('express'),
 	dotenv = require('dotenv');
 
 //add .env variables to the process object
-dotenv.config();
+dotenv.config({silent: true});
 
 //setup the html templating engine
 app.engine('html', swig.renderFile);
