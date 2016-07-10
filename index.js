@@ -13,8 +13,8 @@ app.set('views', __dirname + '/views');
 app.set('base_dir', __dirname);
 
 //Cache templates only in production
-app.set('view cache', process.env.NODE_ENV=="production");
-swig.setDefaults({ cache: process.env.NODE_ENV=="production" });
+app.set('view cache', (process.env.NODE_ENV=="production")?"memory":false );
+swig.setDefaults({ cache: (process.env.NODE_ENV=="production")?"memory":false });
 
 //add a favicon
 app.use(require('serve-favicon')(__dirname + '/assets/favicon.ico'));
