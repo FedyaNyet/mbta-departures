@@ -14,7 +14,7 @@
 		{% if error %}
 			<div>Unable to Access remote feed</div>
 		{% elif schedules %}
-			<div class="container" ng-app="sortApp" ng-controller="mainController">
+			<div class="container" ng-app="mbt_App" ng-controller="mainController">
 
 			  	<form>
 					<div class="form-group">
@@ -70,40 +70,13 @@
 			  
 			</div>
 		{% endif %}
+		<script>
+			//expose schedules to the angular app
+			var schedules = {{schedules|raw|json_encode}};
+		</script>
 		<script src="script/angular/angular.js"></script>
 		<script src="script/moment/moment.js"></script>
 		<script src="script/angular-moment/angular-moment.js"></script>
-		<script>
-			var schedules = {{schedules|raw|json_encode}};
-
-			angular.module('sortApp', ['angularMoment'])
-				.config(function($interpolateProvider){
-				    $interpolateProvider.startSymbol('[[').endSymbol(']]');
-				})
-				.controller('mainController', function($scope) {
-
-					$scope.sortBy = "Origin";
-					$scope.sortReverse = false;
-					$scope.filter = "";
-				  
-					// create the list of sushi rolls 
-					$scope.schedules = {{schedules|raw|json_encode}};
-
-					$scope.setSort = function(col){
-						$scope.sortBy = col;
-						if($scope.sortBy == col)
-							$scope.sortReverse = !$scope.sortReverse;
-					};
-
-					$scope.downBy = function(col){
-						return $scope.sortBy == col && $scope.sortReverse;
-					};
-					$scope.upBy = function(col){
-						return $scope.sortBy == col && !$scope.sortReverse;
-					};
-
-				  
-				});
-		</script>
+		<script src="assets/js/app.js"></script>
 	</body>
 </html>

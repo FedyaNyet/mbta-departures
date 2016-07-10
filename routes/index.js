@@ -3,6 +3,7 @@ var express = require('express'),
 
 //serve npm scripts with the script path.
 router.use('/script', express.static(__dirname + '/../node_modules/'));
+router.use('/assets', express.static(__dirname + '/../public/assets/'));
 
 //display schedules on homepage
 router.get('/', function (req, res) {

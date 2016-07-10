@@ -14,7 +14,7 @@ module.exports = function(grunt) {
                 livereload: true
             },
             express: {
-                files:  [ 'index.js', 'routes/*', 'views/*' ],
+                files:  [ 'index.js', 'routes/*', 'public/*' ],
                 tasks:  [ 'express:dev' ],
                 options: {
                     spawn: false
