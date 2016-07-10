@@ -24,3 +24,6 @@ app.use('/', require('./routes'));
 
 //start the app
 app.listen(process.env.PORT);
+
+if(process.env.NODE_ENV == 'develope')
+	console.log('http://localhost:' + process.env.PORT + "/")

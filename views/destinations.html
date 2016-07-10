@@ -44,8 +44,13 @@
 								<span ng-show="downBy('Trip')" class="fa fa-caret-down"></span>
 								<span ng-show="upBy('Trip')" class="fa fa-caret-up"></span>
 							</a></td>
+							<td><a href="#" ng-click="setSort('Status')">
+								Status
+								<span ng-show="downBy('Status')" class="fa fa-caret-down"></span>
+								<span ng-show="upBy('Status')" class="fa fa-caret-up"></span>
+							</a></td>
 							<td><a href="#" ng-click="setSort('ScheduledTime')">
-								ScheduledTime
+								Scheduled Departure
 								<span ng-show="downBy('ScheduledTime')" class="fa fa-caret-down"></span>
 								<span ng-show="upBy('ScheduledTime')" class="fa fa-caret-up"></span>
 							</a></td>
@@ -56,6 +61,7 @@
 							<td>[[ sch.Origin ]]</td>
 							<td>[[ sch.Destination ]]</td>
 							<td>[[ sch.Trip ]]</td>
+							<td>[[ sch.Status ]]</td>
 							<td>[[ sch.ScheduledTime * 1000 | amCalendar ]]</td>
 						</tr>
 					</tbody>
