@@ -22,5 +22,5 @@ app.use(require('serve-favicon')(__dirname + '/assets/favicon.ico'));
 //add url routing
 app.use('/', require('./routes'));
 
-app.listen(3000);
-console.log('http://localhost:3000/');
+//start the app
+app.listen(process.env.PORT);
